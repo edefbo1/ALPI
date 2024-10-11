@@ -508,7 +508,7 @@ function main() {
   menu.svg_grid_div = grid.get_div({ width: vor.width, height: vor.height });
   vor.set_parent_only(menu.svg_grid_div);
   menu_generate_view(grid.get_div({ width: 120, height: 120 }));
-  menu_nb_seeds(grid.get_div({ width: 240, height: 120 }));
+  //menu_nb_seeds(grid.get_div({ width: 240, height: 120 }));
   menu_sampling(grid.get_div({ width: 120, height: 120 }));
   menu_mouse(grid.get_div({ width: 120, height: 240 }));
   menu_color(grid.get_div({ width: 120, height: 240 }));
