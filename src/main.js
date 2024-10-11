@@ -505,32 +505,47 @@ function menu_filters(parent) {
 }
 
 function main() {
-  menu.svg_grid_div = grid.get_div({ width: vor.width, height: vor.height });
+  // Create main grid div with responsive dimensions
+  menu.svg_grid_div = grid.get_div({ width: vor.width, height: vor.height, id: "box child" });
   vor.set_parent_only(menu.svg_grid_div);
-  menu_generate_view(grid.get_div({ width: 120, height: 120 }));
-  //menu_nb_seeds(grid.get_div({ width: 240, height: 120 }));
-  menu_sampling(grid.get_div({ width: 120, height: 120 }));
-  menu_mouse(grid.get_div({ width: 120, height: 240 }));
-  menu_color(grid.get_div({ width: 120, height: 240 }));
-  menu_size(grid.get_div({ width: 180, height: 240 }));
-  menu_shape_space_min(grid.get_div({ width: 240, height: 240 }));
+  
+  // Define standard dimensions to ensure consistency in layout
+  const small_box = { width: 120, height: 120};
+  const small_box1 = { width: 120, height: 120, id: "first" };
+  const medium_box = { width: 180, height: 120 };
+  const large_box = { width: 240, height: 120 };
+  const tall_box = { width: 120, height: 240 };
+  const extra_tall_box = { width: 240, height: 240 };
 
-  let col_exp_buttons = grid.get_div({ width: 240, height: 120 });
-  let col_exp_select = grid.get_div({ width: 120, height: 120 });
+  // Organized layout, grouped by similar functionality
+  menu_generate_view(grid.get_div(small_box1));      // Generate View Section
+  menu_sampling(grid.get_div(small_box));           // Sampling Section
+  menu_mouse(grid.get_div(tall_box));               // Mouse Control Section
+  menu_color(grid.get_div(tall_box));               // Color Settings Section
+  menu_size(grid.get_div(extra_tall_box));          // Size Settings Section
+  menu_shape_space_min(grid.get_div(extra_tall_box)); // Shape Space Min Section
+
+  // Export buttons and options in a separate group
+  let col_exp_buttons = grid.get_div(large_box);    // Export Buttons
+  let col_exp_select = grid.get_div(small_box);     // Export Options
   menu_export(col_exp_buttons, col_exp_select);
 
-  menu_shape(grid.get_div({ width: 120, height: 240 }));
-  menu_map(grid.get_div({ width: 120, height: 240 }));
+  // Additional options neatly aligned
+  menu_shape(grid.get_div(tall_box));               // Shape Settings Section
+  menu_map(grid.get_div(tall_box));                 // Map Settings Section
 
-  menu_filters(grid.get_div({ width: 240, height: 120 }));
-  menu_github_version(grid.get_div({ width: 240, height: 120 }));
+  // Filters and GitHub version controls, grouped together
+  menu_filters(grid.get_div(large_box));            // Filters Section
+  menu_github_version(grid.get_div(large_box));     // GitHub Version Section
 
+  // Apply grid layout and update seeds
   grid.apply();
-
   vor.update_seeds({ clear: true, width: vor.width, height: vor.height });
 
+  // Add event listener to handle main window interactions
   window.addEventListener("main_window", onMainWindow, false);
 }
+
 
 function onMainWindow(e) {
   const width = e.detail.width;

@@ -104,12 +104,15 @@ class Grid {
         }
         `
     );
+    console.log(props.id)
+    let classe = props.id!=null?props.id:"";
     let c_comp = html(
       parent,
       /*html*/ `
-            <div id=${id} class="child" data-width=${width} data-height=${height} />
+            <div id=${id} class=${classe + " child"} data-width=${width} data-height=${height} />
         `
     );
+    
     c_comp.addEventListener("wheel", onWheel);
     return c_comp;
   }
