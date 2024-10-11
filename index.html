@@ -79,6 +79,67 @@
         text-align: center;
         font-size: 1.2rem;
       }
+      .custom-control-input:checked ~ .custom-control-label::before {
+          background-color: black;
+          border-color: black;
+      }
+
+      .custom-control-label {
+          color: black;
+      }
+
+      input[type="text"], input[type="range"] {
+          color: black;
+          border-color: black;
+      }
+
+      h2, h3, h4, h5, h6 {
+          color: black !important;
+      }
+
+      .dropdown-item {
+          color: black;
+      }
+
+      .toggle.btn {
+        background-color: black;
+        border-color: black;
+        color: white !important;
+      }
+
+      /* Change text color for toggle button in both states */
+/* Set text color to white for both the "on" and "off" states */
+.toggle.btn-dark {
+    background-color: black;
+    border-color: black;
+    color: white; /* Make sure the text is white */
+}
+
+.toggle.btn-secondary {
+    background-color: black;
+    border-color: black;
+    color: white; /* Make sure the text is white */
+}
+
+/* Adjust the toggle handle for better contrast */
+.toggle.btn .toggle-handle {
+    background-color: white; /* White toggle handle for better contrast */
+    color: white;
+}
+
+    
+
+      input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background: black;
+          cursor: pointer;
+      }
+
+
     </style>
   </head>
   <body>

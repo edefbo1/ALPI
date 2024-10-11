@@ -4,7 +4,7 @@ import {html} from "./web-js-utils.js"
 class Bootstrap{
     button(parent,id,Text){
         return html(parent,
-        /*html*/`<button id=${id} type="button" class="btn btn-primary w-100" style="margin-bottom:5px;margin-top:5px">${Text}</button>`
+        /*html*/`<button id=${id} type="button" class="btn btn-dark w-100" style="margin-bottom:5px;margin-top:5px">${Text}</button>`
         )
     }
     
@@ -12,7 +12,7 @@ class Bootstrap{
         return html(parent,
         /*html*/`   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                    <button class="btn btn-primary" type="button" id="button-addon1">${Text}</button>
+                    <button class="btn btn-dark" type="button" id="button-addon1">${Text}</button>
                     </div>
                     <input id=${id} type="text" placeholder="seeds number" aria-label="Example text with button addon" aria-describedby="button-addon1">
                     </div>`
@@ -21,20 +21,22 @@ class Bootstrap{
     
     input_text(parent,id,placeholder,width="w-25"){
         let input_txt = html(parent,
-        /*html*/`   <input id=${id} type="text" class="form-group ${width}" placeholder="${placeholder}" aria-label="Example text with button addon" aria-describedby="button-addon1">`
+        /*html*/`   <input id=${id} type="text" class="form-group ${width}" placeholder="${placeholder}" aria-label="Example text with button addon" aria-describedby="button-addon1" style="color:black; border-color:black;">`
         )
-        //input_txt.value = input
-        return input_txt
+        return input_txt;
+    }
+   
+    
+    input_range(parent, max, value = null) {
+        let el = html(parent,
+        /*html*/ `<input type="range" class="custom-range" max=${max} style="color:black; border-color:black;">`
+        );
+        if (value != null) {
+            el.value = value;
+        }
+        return el;
     }
     
-    input_range(parent,max,value=null){
-        let el = html(parent,
-        /*html*/`<input type="range" class="custom-range" max=${max} >`)
-        if(value!=null){
-            el.value = value
-        }
-        return el
-    }
     
     cols(parent,nb_cols,props=null){
         let contaienr = html(parent,/*html*/`<div class="container"></div>`)
@@ -49,7 +51,7 @@ class Bootstrap{
     dropdown(parent,dropdown_label,droplist,dropitems,callback){
         let dropdown = html(parent,/*html*/`<div class="dropdown"></div>`)
         let button = html(dropdown,/*html*/`
-            <button class="btn btn-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-dark dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 ${dropdown_label}
             </button>`)
         let dropdown_menu = html(dropdown,/*html*/`<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -63,10 +65,14 @@ class Bootstrap{
     }
     
     //classes : ml-1
-    toggle(parent,on="On",off="Off"){
+    toggle(parent, on = "On", off = "Off") {
         return html(parent,
-        /*html*/`<input type="checkbox" class="m-1" data-height="20" checked data-toggle="toggle" data-on="${on}" data-off="${off}" >`)
+        /*html*/ `<input type="checkbox" class="m-1 text-white" data-height="20" checked data-toggle="toggle" data-on="${on}" data-off="${off}" data-onstyle="dark" data-offstyle="secondary">`
+        );
     }
+    
+    
+    
     
     radio_group(parent,name,labels_list,nb_checked,callback=null){
         let res = []
@@ -76,7 +82,7 @@ class Bootstrap{
             let element = html(p_div,
             /*html*/`<div class="custom-control custom-radio">
                         <input type="radio" data-label="${label}" class="custom-control-input" id="rg_${label}" name="rg_${name}" ${(i==nb_checked)?"checked":""} >
-                        <label class="custom-control-label" for="rg_${label}">${label}</label>
+                        <label class="custom-control-label" for="rg_${label}" style="color:black;">${label}</label>
                     </div>`
             )
             if(callback != null){
@@ -86,6 +92,7 @@ class Bootstrap{
         }
         return res
     }
+   
     
     checkbox_group(parent,name,labels_list,checked_list,callback){
         let p_div = html(parent,/*html*/`<div id="${name}"></div>`)
@@ -94,12 +101,13 @@ class Bootstrap{
             let element = html(p_div,
             /*html*/`<div class="custom-control custom-checkbox">
                         <input type="checkbox" data-name="${label}" class="custom-control-input" id="cb_${name}_${label}" name="${name}" ${(checked_list[i])?"checked":""}>
-                        <label class="custom-control-label" for="cb_${name}_${label}">${label}</label>
+                        <label class="custom-control-label" for="cb_${name}_${label}" style="color:black;">${label}</label>
                     </div>`
             )
             $(element).change(callback)
         }
     }
+   
     
 }
 
