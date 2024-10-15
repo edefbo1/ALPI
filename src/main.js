@@ -284,26 +284,24 @@ function menu_generate_view(parent) {
 
 function menu_nb_seeds(parent) {
   let scfg = vor.seeds.config;
+  const MAX_SEEDS = 1000;  // Valore massimo fisso per i seeds
+
   html(
     parent,
     /*html*/ `<h5 style="margin-bottom:5px;color:#1F7BFD">Seeds</h5>`
   );
-  //html(parent,/*html*/`<a style="margin:10px">Seeds Number</a>`)
+
   let in_nb_seeds = bs.input_text(
     parent,
     "in_nb_seed",
     `${scfg.nb_seeds} seeds`,
     "w-100"
   );
-  let rg_nb_seeds = bs.input_range(parent, scfg.max_seeds);
-  rg_nb_seeds.value = scfg.nb_seeds;
-  let in_max_seeds = bs.input_text(
-    parent,
-    "in_max_seed",
-    `set to increase max seeds, ${scfg.max_seeds}`,
-    "w-100"
-  );
 
+  let rg_nb_seeds = bs.input_range(parent, MAX_SEEDS);  // Range fissato a 1000
+  rg_nb_seeds.value = scfg.nb_seeds;
+
+  // Rimuoviamo l'input per cambiare il max_seeds
   $(rg_nb_seeds).on("input", (e) => {
     in_nb_seeds.value = rg_nb_seeds.value;
     vor.update_seeds({ nb_seeds: rg_nb_seeds.value });
@@ -311,20 +309,14 @@ function menu_nb_seeds(parent) {
 
   $(in_nb_seeds).change(() => {
     let update = {};
-    if (in_nb_seeds.value > scfg.max_seeds) {
-      rg_nb_seeds.max = in_nb_seeds.value;
+    if (in_nb_seeds.value > MAX_SEEDS) {
+      rg_nb_seeds.value = MAX_SEEDS;  // Limita il valore al massimo fisso
+      update.nb_seeds = MAX_SEEDS;
+    } else {
       rg_nb_seeds.value = in_nb_seeds.value;
-      update.max_seeds = in_nb_seeds.value;
-      in_max_seeds.setAttribute("placeholder", `max seeds ${update.max_seeds}`);
-      in_max_seeds.value = null;
+      update.nb_seeds = rg_nb_seeds.value;
     }
-    rg_nb_seeds.value = in_nb_seeds.value;
-    update.nb_seeds = rg_nb_seeds.value;
     vor.update_seeds(update);
-  });
-  $(in_max_seeds).change(() => {
-    rg_nb_seeds.max = in_max_seeds.value;
-    vor.update_seeds({ max_seeds: in_max_seeds.value });
   });
 }
 
@@ -519,6 +511,7 @@ function main() {
 
   // Organized layout, grouped by similar functionality
   menu_generate_view(grid.get_div(small_box1));      // Generate View Section
+  menu_nb_seeds(grid.get_div({ width: 240, height: 120 }));
   menu_sampling(grid.get_div(small_box));           // Sampling Section
   menu_mouse(grid.get_div(tall_box));               // Mouse Control Section
   menu_color(grid.get_div(tall_box));               // Color Settings Section
